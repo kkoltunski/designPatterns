@@ -1,0 +1,8 @@
+# VisualStudio files which could be skipped #
+#############################################
+
+.vs
+Debug
+*.sln
+*.filters
+*.user
