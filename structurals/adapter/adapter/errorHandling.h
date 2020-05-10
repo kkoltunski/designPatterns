@@ -8,8 +8,7 @@ private:
 	std::string MSG;
 
 public:
-	openingFileFail(const std::string _filePath) {
-		MSG = "Opening file " + _filePath + "failed.";
+	explicit openingFileFail(const std::string &_filePath) : MSG("Opening file " + _filePath + "failed."){
 	}
 
 	virtual const char* what() const override {
@@ -22,8 +21,7 @@ private:
 	std::string MSG;
 
 public:
-	streamIsBroken() {
-		MSG = "Stream is in fail state.";
+	streamIsBroken() : MSG("Stream is in fail state."){
 	}
 
 	virtual const char* what() const override {

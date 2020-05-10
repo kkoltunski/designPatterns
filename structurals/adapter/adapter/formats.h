@@ -10,7 +10,7 @@ protected:
 	iFileStream file;
 
 public:
-	flacFile(std::string _pathToFile);
+	explicit flacFile(const std::string &_pathToFile);
 };
 
 /*For example - this class can not be modifyed (library or so).
@@ -20,7 +20,7 @@ protected:
 	iFileStream file;
 
 public:
-	mp3File(std::string _pathToFile);
+	explicit mp3File(const std::string &_pathToFile);
 };
 
 #endif // FORMATS_H

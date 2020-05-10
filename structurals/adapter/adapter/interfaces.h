@@ -30,7 +30,7 @@ protected:
 	std::ifstream stream;
 
 public:
-	iFileStream(std::string _filePath) : path{ _filePath }{
+	explicit iFileStream(const std::string &_filePath) : path{ _filePath }{
 	}
 	void openFile();
 	virtual unsigned long long int readSignature(signatureLength _signatureLength, int _signatureFirstBytePosition = 0) override;

@@ -1,6 +1,6 @@
 #include "formats.h"
 
-flacFile::flacFile(std::string _pathToFile) : file(_pathToFile) {
+flacFile::flacFile(const std::string &_pathToFile) : file(_pathToFile) {
 	file.setSignature(signature::flacSignature);
 
 	file.openFile();
@@ -18,6 +18,6 @@ void flacFile::formatValidation(){
 	}
 }
 
-mp3File::mp3File(std::string _pathToFile) : file(_pathToFile) {
+mp3File::mp3File(const std::string &_pathToFile) : file(_pathToFile) {
 	file.openFile();
 }

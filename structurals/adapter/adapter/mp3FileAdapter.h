@@ -8,7 +8,7 @@ protected:
 	virtual void formatValidation() override;
 
 public:
-	mp3FileAdapter(std::string _pathToFile) : mp3File(_pathToFile) {
+	explicit mp3FileAdapter(const std::string &_pathToFile) : mp3File(_pathToFile) {
 		formatValidation();
 	}
 };
