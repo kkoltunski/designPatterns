@@ -28,7 +28,7 @@ private:
 	carInfoBuilder* builder;
 
 public:
-	carInfoDirector(carInfoBuilder* _type);
+	explicit carInfoDirector(carInfoBuilder* _type);
 	virtual ~carInfoDirector(){
 		delete builder;
 	}
