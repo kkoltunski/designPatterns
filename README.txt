@@ -1,4 +1,4 @@
-This repository include basic implementations for design patterns.
+This repository include basic small projects with design patterns implementations.
 
 2020.04.27 
 -preparing repository structure;
@@ -16,3 +16,6 @@ This repository include basic implementations for design patterns.
 
 2020.05.10
 -adapter design pattern update
+
+2020.05.12
+-decorator design pattern update
