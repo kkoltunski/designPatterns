@@ -18,7 +18,7 @@ protected:
 	workerData employeeData;
 
 public:
-	iWorker(int _salary, std::string _position, workerStatus _status);
+	iWorker(int _salary, const std::string &_position, workerStatus _status);
 	virtual ~iWorker() = default;
 	virtual void assignJob(const std::string& _toDo) = 0;
 	virtual void doTheJob() = 0;
@@ -48,7 +48,7 @@ protected:
 	job<vector<std::string>> assignedJob;
 
 public:
-	manager(int _salary, std::string _position) : iWorker(_salary, _position, workerStatus::manager) {
+	manager(int _salary, const std::string &_position) : iWorker(_salary, _position, workerStatus::manager) {
 		workerIDInitialization();
 		incrementWorkersNumber();
 	}
@@ -75,7 +75,7 @@ protected:
 	job<std::string> assignedJob;
 
 public:
-	worker(int _salary, std::string _position, workerStatus _contract = workerStatus::employee) : iWorker(_salary, _position, _contract) {
+	worker(int _salary, const std::string &_position, workerStatus _contract = workerStatus::employee) : iWorker(_salary, _position, _contract) {
 		workerIDInitialization();
 		incrementWorkersNumber();
 	}

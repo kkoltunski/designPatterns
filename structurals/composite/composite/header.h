@@ -25,7 +25,7 @@ void createTaskUnit(vector<vector<string>> &_vectorRef){
 	}
 }
 
-void showTaskUnit(vector<vector<string>>& _vectorRef){
+void showTaskUnit(const vector<vector<string>>& _vectorRef){
 	for(int i = 0; i < 10; ++i){
 		for(int x = 0; x < 10; ++x){
 			std::cout << _vectorRef[i][x] << ",";

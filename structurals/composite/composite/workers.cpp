@@ -5,7 +5,7 @@ int manager::managersNumber{ 0 };
 
 extern vector<vector<std::string>> taskUnit;
 
-iWorker::iWorker(int _salary, std::string _position, workerStatus _status) {
+iWorker::iWorker(int _salary, const std::string &_position, workerStatus _status) {
 	employeeData.salary = _salary;
 	employeeData.position = _position;
 	employeeData.contract = _status;
