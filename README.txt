@@ -31,3 +31,6 @@ Purpose of this repository is to train design patterns and sometimes i used ment
 -composit design pattern updadte
 (company workers management - base software to develop new functionalities development)
 
+2020.05.22
+-proxy design pattern update - protection proxy implementation is similar to decorator
+(software used to generate configuration file - protection proxy is used to check if user has access to file)

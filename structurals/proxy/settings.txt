@@ -1,0 +1,7 @@
+This is PROXY design pattern program implementation.
+
+Settings
+	{~option0 := PROXY design pattern};
+	{~option1 := Parameter introduced direct};
+	{~option2 := Parameter introduced by proxy guard};
+	{~option3 := absolute};
