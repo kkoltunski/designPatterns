@@ -34,3 +34,8 @@ Purpose of this repository is to train design patterns and sometimes i used ment
 2020.05.22
 -proxy design pattern update - protection proxy implementation is similar to decorator
 (software used to generate configuration file - protection proxy is used to check if user has access to file)
+
+2020.05.26
+-facade design pattern is skipped because it is used in few previous projects;
+-flyweight design pattern update
+(books management - e.g for library or web store)
