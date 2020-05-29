@@ -39,3 +39,8 @@ Purpose of this repository is to train design patterns and sometimes i used ment
 -facade design pattern is skipped because it is used in few previous projects;
 -flyweight design pattern update
 (books management - e.g for library or web store)
+
+2020.05.29
+-repository structure update;
+-bridge design pattern update - similar to adapter but it should be used to separate control interface from data interface
+(stepper motor movement simulation - absolute mode use passed value ass new position, relative mode use passed value as offset)
