@@ -44,3 +44,11 @@ Purpose of this repository is to train design patterns and sometimes i used ment
 -repository structure update;
 -bridge design pattern update - similar to adapter but it should be used to separate control interface from data interface
 (stepper motor movement simulation - absolute mode use passed value ass new position, relative mode use passed value as offset)
+
+2020.06.03
+-template method design patter update
+(random profibus dp frame generator)
+
+2020.06.09
+-strategy design pattern update
+(boosted fstream library used to add operation (such as converter to upper cases, lower cases, separator) on files)
