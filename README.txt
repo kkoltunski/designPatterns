@@ -52,3 +52,11 @@ Purpose of this repository is to train design patterns and sometimes i used ment
 2020.06.09
 -strategy design pattern update
 (boosted fstream library used to add operation (such as converter to upper cases, lower cases, separator) on files)
+
+2020.06.09
+-state design pattern is skipped because build of program look like strategy. 
+Comparing to strategy - purpose of this design pattern is change internal state of context while strategy usage should change behavior of context.
+
+2020.06.16
+-chain of responsibility design pattern update
+(project used to create user defined logs. Chain of responsibility divide whole process on 3 steps - user authentication, log creator, log saver.)
