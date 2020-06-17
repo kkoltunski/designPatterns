@@ -60,3 +60,7 @@ Comparing to strategy - purpose of this design pattern is change internal state 
 2020.06.16
 -chain of responsibility design pattern update
 (project used to create user defined logs. Chain of responsibility divide whole process on 3 steps - user authentication, log creator, log saver.)
+
+2020.06.17
+-rebuilded solution for chain of responsibility design pattern
+(account and taskHandler class were extracted to project chainOfResponsibility.Library, unit test project was created - chainOfResponsibility.UnitTests)
