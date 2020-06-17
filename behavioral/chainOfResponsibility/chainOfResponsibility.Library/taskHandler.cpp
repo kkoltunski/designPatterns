@@ -1,10 +1,10 @@
 #include "taskHandler.h"
 
-void taskHandler::nextTaskAssigment(taskHandler* _nextTask){
-	if(nextTask == nullptr){
+void taskHandler::nextTaskAssigment(taskHandler* _nextTask) {
+	if (nextTask == nullptr) {
 		nextTask = _nextTask;
 	}
-	else{
+	else {
 		nextTask->nextTaskAssigment(_nextTask);
 	}
 }
@@ -15,18 +15,18 @@ void taskHandler::streamCleaning() {
 }
 
 //Authenticator methods
-authenticator::authenticator(accountsManagement* _accountManagment) 
-	: auxiliaryID(""), auxiliaryKey(""), globalAccountsManagment{ _accountManagment }, accountToAuthorize{nullptr}{
+authenticator::authenticator(accountsManagement* _accountManagment)
+	: auxiliaryID(""), auxiliaryKey(""), globalAccountsManagment{ _accountManagment }, accountToAuthorize{ nullptr }{
 }
 
 void authenticator::getLogin() {
 	bool streamError{ false };
 
-	do{
+	do {
 		std::cout << "Type your login or enter \"0\" to cancel : ";
 		std::cin >> auxiliaryID;
 
-		if(globalAccountsManagment->isLoginUnique(auxiliaryID)){
+		if (globalAccountsManagment->isLoginUnique(auxiliaryID)) {
 			std::cin.setstate(std::ios::failbit);
 		}
 		streamError = std::cin.fail();
@@ -47,7 +47,7 @@ void authenticator::getPassword() {
 		std::cout << "Type your password or enter \"0\" to cancel : ";
 		std::cin >> auxiliaryKey;
 
-		if(!accountToAuthorize->isPasswordValid(auxiliaryKey)){
+		if (!accountToAuthorize->isPasswordValid(auxiliaryKey)) {
 			std::cin.setstate(std::ios::failbit);
 		}
 		streamError = std::cin.fail();
@@ -56,29 +56,29 @@ void authenticator::getPassword() {
 
 	} while (streamError && (auxiliaryKey != "0"));
 
-	if(auxiliaryKey == "0"){
+	if (auxiliaryKey == "0") {
 		auxiliaryKey.clear();
 	}
 }
 
-void authenticator::initializer(){
+void authenticator::initializer() {
 	accountToAuthorize = nullptr;
 	auxiliaryID.clear();
 	auxiliaryKey.clear();
 }
 
-taskHandler* authenticator::taskExecution(){
+taskHandler* authenticator::taskExecution() {
 	taskHandler* result{ nullptr };
 	getLogin();
 
-	if(!auxiliaryID.empty()){
+	if (!auxiliaryID.empty()) {
 		accountToAuthorize = globalAccountsManagment->getAccoutn(auxiliaryID);
 
 		getPassword();
 
-		if(!auxiliaryKey.empty()){
+		if (!auxiliaryKey.empty()) {
 			std::cout << "Authentication sucessfull.\n" << std::endl;
- 			result = nextTask;
+			result = nextTask;
 		}
 	}
 
@@ -88,23 +88,23 @@ taskHandler* authenticator::taskExecution(){
 }
 
 //Log builder methods
-logBuilder::logBuilder( std::list<std::string>* const _archive, std::size_t _payloadDataLength)
+logBuilder::logBuilder(std::list<std::string>* const _archive, std::size_t _payloadDataLength)
 	: pToLogArchive{ _archive }, payloadDataLength{ _payloadDataLength }, actualSystemTimestamp{}{
 }
 
-void logBuilder::getSystemTimestamp(){
+void logBuilder::getSystemTimestamp() {
 	auto currentTime = std::chrono::system_clock::now();
 	actualSystemTimestamp = std::chrono::system_clock::to_time_t(currentTime);
 }
 
-void logBuilder::getPayloadData(){
+void logBuilder::getPayloadData() {
 	bool streamError{ false };
 
-	do{
+	do {
 		std::cout << "Introduce log palyload data or enter \"0\" to cancel.\n(Size have to be bigger than " << payloadDataLength << ") : ";
 
 		std::getline(std::cin, payloadData);
-		if(payloadData.size() <= payloadDataLength){
+		if (payloadData.size() <= payloadDataLength) {
 			std::cin.setstate(std::ios::failbit);
 		}
 
@@ -113,12 +113,12 @@ void logBuilder::getPayloadData(){
 
 	} while (streamError && (payloadData != "0"));
 
-	if(payloadData == "0"){
+	if (payloadData == "0") {
 		payloadData.clear();
 	}
 }
 
-std::string logBuilder::logMaker(){
+std::string logBuilder::logMaker() {
 	std::string timeBuffer("", 24), readyLog;
 
 	ctime_s(&timeBuffer[0], sizeof timeBuffer, &actualSystemTimestamp);
@@ -127,16 +127,16 @@ std::string logBuilder::logMaker(){
 	return readyLog;
 }
 
-void logBuilder::initializer(){
+void logBuilder::initializer() {
 	actualSystemTimestamp = 0;
 	payloadData.clear();
 }
 
-taskHandler* logBuilder::taskExecution(){
+taskHandler* logBuilder::taskExecution() {
 	taskHandler* result{ nullptr };
 	getPayloadData();
 
-	if(!payloadData.empty()){
+	if (!payloadData.empty()) {
 		getSystemTimestamp();
 		pToLogArchive->push_back(logMaker());
 		result = nextTask;
@@ -153,15 +153,15 @@ logSaver::logSaver(std::list<std::string>* const _archive, std::ofstream* const 
 
 }
 
-void logSaver::getLogFromArchive(){
+void logSaver::getLogFromArchive() {
 	auxiliaryLog = pToLogArchive->back();
 }
 
-bool logSaver::isFileReady(){
+bool logSaver::isFileReady() {
 	bool result{ false };
 
-	if(pToFileStream->is_open()){
-		if(pToFileStream->good()){
+	if (pToFileStream->is_open()) {
+		if (pToFileStream->good()) {
 			result = true;
 		}
 	}
@@ -175,7 +175,7 @@ void logSaver::initializer() {
 
 taskHandler* logSaver::taskExecution() {
 	taskHandler* result{ nullptr };
-	if(isFileReady()){
+	if (isFileReady()) {
 		getLogFromArchive();
 		auxiliaryLog += "\r\n";
 		pToFileStream->write(&auxiliaryLog[0], auxiliaryLog.size());

@@ -9,27 +9,27 @@ T generateRandomValueInRange(T _bottomRange, T _upperRange) {
 	return static_cast<T>(distr(gen));
 }
 
-void userPassword::generatePassword(){
+void userPassword::generatePassword() {
 	short passwordSize = static_cast<short>(generateRandomValueInRange(accountParameterSettings::minSize, accountParameterSettings::maxSize));
 
-	for(int i = 0; i < passwordSize; ++i){
+	for (int i = 0; i < passwordSize; ++i) {
 		password += static_cast<char>(generateRandomValueInRange(accountParameterSettings::lowestChar, accountParameterSettings::biggestChar));
 	}
 
 	//std::cout << password << std::endl;
 }
 
-bool account::isPasswordValid(const std::string& _passwordToValidate){
+bool account::isPasswordValid(const std::string& _passwordToValidate) {
 	bool result{ true };
 
-	if(key.password != _passwordToValidate){
+	if (key.password != _passwordToValidate) {
 		result = false;
 	}
-		
+
 	return result;
 }
 
-accountsManagement::~accountsManagement(){
+accountsManagement::~accountsManagement() {
 	std::for_each(std::begin(authorizedAccounts), std::end(authorizedAccounts), [](account* pToAccount) { delete pToAccount; });
 }
 
@@ -58,8 +58,8 @@ bool accountsManagement::isLoginCorrect(const std::string& _login) {
 	return result;
 }
 
-void accountsManagement::addAccount(const std::string& _login){
-	try{
+void accountsManagement::addAccount(const std::string& _login) {
+	try {
 		if (!isLoginCorrect(_login)) {
 			throw(std::exception("Login is not correct.\n"));
 		}
@@ -69,7 +69,7 @@ void accountsManagement::addAccount(const std::string& _login){
 
 		authorizedAccounts.push_back(new account(_login));
 	}
-	catch(std::exception &exception){
+	catch (std::exception& exception) {
 		std::cout << exception.what() << std::endl;
 	}
 }
@@ -88,7 +88,7 @@ bool accountsManagement::isLoginUnique(const std::string& _loginToFind) {
 	return result;
 }
 
-account* accountsManagement::getAccoutn(const std::string& _loginToFind){
+account* accountsManagement::getAccoutn(const std::string& _loginToFind) {
 	std::function<bool(account*)> loginComparision = [&](account* pToAccount)
 	{bool lambdaResult{ false }; if (pToAccount->getLogin() == _loginToFind) { lambdaResult = true; } return lambdaResult; };
 

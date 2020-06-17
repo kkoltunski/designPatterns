@@ -7,14 +7,14 @@
 #include <fstream>
 #include "account.h"
 
-class taskHandler{
+class taskHandler {
 protected:
 	void streamCleaning();
 	virtual void initializer() = 0;
 	taskHandler* nextTask;
 
 public:
-	taskHandler() : nextTask{nullptr}{
+	taskHandler() : nextTask{ nullptr } {
 	}
 	virtual ~taskHandler() = default;
 
@@ -22,7 +22,7 @@ public:
 	virtual taskHandler* taskExecution() = 0;
 };
 
-class authenticator : public taskHandler{
+class authenticator : public taskHandler {
 private:
 	void getLogin();
 	void getPassword();
@@ -39,7 +39,7 @@ public:
 	virtual taskHandler* taskExecution() override;
 };
 
-class logBuilder : public taskHandler{
+class logBuilder : public taskHandler {
 private:
 	void getSystemTimestamp();
 	void getPayloadData();
@@ -57,7 +57,7 @@ public:
 	virtual taskHandler* taskExecution() override;
 };
 
-class logSaver : public taskHandler{
+class logSaver : public taskHandler {
 private:
 	bool isFileReady();
 	void getLogFromArchive();

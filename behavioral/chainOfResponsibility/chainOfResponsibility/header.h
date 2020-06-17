@@ -2,6 +2,7 @@
 #define HEADER_H
 
 #include <fstream>
+#include "account.h"
 #include "taskHandler.h"
 
 std::list<std::string> internalLogArchive;

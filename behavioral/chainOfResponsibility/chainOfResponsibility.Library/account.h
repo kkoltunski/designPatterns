@@ -1,5 +1,5 @@
-#ifndef STRUCTURES_H
-#define STRUCTURES_H
+#ifndef ACCOUNT_H
+#define ACCOUNT_H
 
 #include <iostream>
 #include <string>
@@ -11,9 +11,9 @@
 
 enum class accountParameterSettings : char { minSize = 1/*8*/, maxSize = 5/*32*/, lowestChar = '!', biggestChar = '~' };
 
-class userLogin{
+class userLogin {
 private:
-	userLogin(const std::string& _login) : login{ _login }{
+	userLogin(const std::string& _login) : login{ _login } {
 	}
 
 	std::string login;
@@ -21,7 +21,7 @@ private:
 	friend class account;
 };
 
-class userPassword{
+class userPassword {
 private:
 	userPassword() : password{ "" } {
 		generatePassword();
@@ -41,13 +41,13 @@ private:
 public:
 	account(const std::string& _login) : ID{ _login }, key{}{
 	}
-	inline std::string getLogin(){
+	inline std::string getLogin() {
 		return ID.login;
 	}
 	bool isPasswordValid(const std::string& _passwordToValidate);
 };
 
-class accountsManagement{
+class accountsManagement {
 private:
 	bool isLoginCorrect(const std::string& _login);
 
@@ -62,4 +62,4 @@ public:
 	account* getAccoutn(const std::string& _loginToFind);
 };
 
-#endif // STRUCTURES_H
+#endif // ACCOUNT_H

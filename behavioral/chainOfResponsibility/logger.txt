@@ -2,3 +2,4 @@ Tue Jun 16 16:26:47 2020 : This is "chain of responsibility" design pattern
 Tue Jun 16 16:27:35 2020 : Logs created by "chain of responsibility" design pattern
 Tue Jun 16 16:28:36 2020 : One more test and...
 Tue Jun 16 16:29:07 2020 : ...and im going to upload this on my GitHub :)
+Wed Jun 17 11:41:47 2020 : Log created after solution rebuilding (.lib and TDD added)

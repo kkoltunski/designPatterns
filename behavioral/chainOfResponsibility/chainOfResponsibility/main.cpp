@@ -9,10 +9,10 @@ int main(){
 	logSaver* pToLogSaver = new logSaver(&internalLogArchive, &stramToFile);
 	taskHandler* logHandler = pToAuthenticator;
 
-	manager.addAccount("Klaudek24");
-	manager.addAccount("Mini1999");
-	manager.addAccount("randomMan");
-	manager.addAccount("randomMan11");
+	manager.addAccount("Klaud");
+	manager.addAccount("Mini");
+	manager.addAccount("rando");
+	manager.addAccount("ranMa");
 
 	logHandler->nextTaskAssigment(pToLogBuilder);
 	logHandler->nextTaskAssigment(pToLogSaver);
