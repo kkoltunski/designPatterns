@@ -59,7 +59,7 @@ public:
 
 	void addAccount(const std::string& _login);
 	bool isLoginUnique(const std::string& _loginToFind);
-	account* getAccoutn(const std::string& _loginToFind);
+	account* tryToGetAccoutn(const std::string& _loginToFind);
 };
 
 #endif // ACCOUNT_H

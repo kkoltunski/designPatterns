@@ -24,8 +24,8 @@ public:
 
 class authenticator : public taskHandler {
 private:
-	void getLogin();
-	void getPassword();
+	bool tryToGetLogin();
+	bool tryToGetPassword();
 	virtual void initializer() override;
 
 	std::string auxiliaryID;
@@ -42,7 +42,7 @@ public:
 class logBuilder : public taskHandler {
 private:
 	void getSystemTimestamp();
-	void getPayloadData();
+	bool tryToGetPayloadData();
 	std::string logMaker();
 	virtual void initializer() override;
 

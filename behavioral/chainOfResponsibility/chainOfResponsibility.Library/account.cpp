@@ -88,11 +88,16 @@ bool accountsManagement::isLoginUnique(const std::string& _loginToFind) {
 	return result;
 }
 
-account* accountsManagement::getAccoutn(const std::string& _loginToFind) {
+account* accountsManagement::tryToGetAccoutn(const std::string& _loginToFind) {
+	account* result{ nullptr };
 	std::function<bool(account*)> loginComparision = [&](account* pToAccount)
 	{bool lambdaResult{ false }; if (pToAccount->getLogin() == _loginToFind) { lambdaResult = true; } return lambdaResult; };
 
 	auto accountIterator = std::find_if(std::begin(authorizedAccounts), std::end(authorizedAccounts), loginComparision);
 
-	return (*accountIterator);
+	if (accountIterator != std::end(authorizedAccounts)) {
+		result = (*accountIterator);
+	}
+
+	return result;
 }

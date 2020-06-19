@@ -19,46 +19,46 @@ authenticator::authenticator(accountsManagement* _accountManagment)
 	: auxiliaryID(""), auxiliaryKey(""), globalAccountsManagment{ _accountManagment }, accountToAuthorize{ nullptr }{
 }
 
-void authenticator::getLogin() {
-	bool streamError{ false };
+bool authenticator::tryToGetLogin() {
+	bool streamError{ false }, result{ true };
 
 	do {
 		std::cout << "Type your login or enter \"0\" to cancel : ";
 		std::cin >> auxiliaryID;
-
 		if (globalAccountsManagment->isLoginUnique(auxiliaryID)) {
 			std::cin.setstate(std::ios::failbit);
 		}
 		streamError = std::cin.fail();
-
 		streamCleaning();
+
+		if (auxiliaryID == "0") {
+			result = false;
+		}
 
 	} while (streamError && (auxiliaryID != "0"));
 
-	if (auxiliaryID == "0") {
-		auxiliaryID.clear();
-	}
+	return result;
 }
 
-void authenticator::getPassword() {
-	bool streamError{ false };
+bool authenticator::tryToGetPassword() {
+	bool streamError{ false }, result{ true };
 
 	do {
 		std::cout << "Type your password or enter \"0\" to cancel : ";
 		std::cin >> auxiliaryKey;
-
 		if (!accountToAuthorize->isPasswordValid(auxiliaryKey)) {
 			std::cin.setstate(std::ios::failbit);
 		}
 		streamError = std::cin.fail();
-
 		streamCleaning();
+
+		if (auxiliaryKey == "0") {
+			result = false;
+		}
 
 	} while (streamError && (auxiliaryKey != "0"));
 
-	if (auxiliaryKey == "0") {
-		auxiliaryKey.clear();
-	}
+	return result;
 }
 
 void authenticator::initializer() {
@@ -69,14 +69,11 @@ void authenticator::initializer() {
 
 taskHandler* authenticator::taskExecution() {
 	taskHandler* result{ nullptr };
-	getLogin();
 
-	if (!auxiliaryID.empty()) {
-		accountToAuthorize = globalAccountsManagment->getAccoutn(auxiliaryID);
+	if (tryToGetLogin()) {
+		accountToAuthorize = globalAccountsManagment->tryToGetAccoutn(auxiliaryID);
 
-		getPassword();
-
-		if (!auxiliaryKey.empty()) {
+		if (tryToGetPassword()) {
 			std::cout << "Authentication sucessfull.\n" << std::endl;
 			result = nextTask;
 		}
@@ -97,8 +94,8 @@ void logBuilder::getSystemTimestamp() {
 	actualSystemTimestamp = std::chrono::system_clock::to_time_t(currentTime);
 }
 
-void logBuilder::getPayloadData() {
-	bool streamError{ false };
+bool logBuilder::tryToGetPayloadData() {
+	bool streamError{ false }, result{ true };
 
 	do {
 		std::cout << "Introduce log palyload data or enter \"0\" to cancel.\n(Size have to be bigger than " << payloadDataLength << ") : ";
@@ -107,15 +104,16 @@ void logBuilder::getPayloadData() {
 		if (payloadData.size() <= payloadDataLength) {
 			std::cin.setstate(std::ios::failbit);
 		}
-
 		streamError = std::cin.fail();
 		std::cin.clear();
 
+		if (payloadData == "0") {
+			result = false;
+		}
+
 	} while (streamError && (payloadData != "0"));
 
-	if (payloadData == "0") {
-		payloadData.clear();
-	}
+	return result;
 }
 
 std::string logBuilder::logMaker() {
@@ -134,9 +132,8 @@ void logBuilder::initializer() {
 
 taskHandler* logBuilder::taskExecution() {
 	taskHandler* result{ nullptr };
-	getPayloadData();
-
-	if (!payloadData.empty()) {
+	
+	if (tryToGetPayloadData()) {
 		getSystemTimestamp();
 		pToLogArchive->push_back(logMaker());
 		result = nextTask;
