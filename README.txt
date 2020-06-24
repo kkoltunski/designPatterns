@@ -64,3 +64,7 @@ Comparing to strategy - purpose of this design pattern is change internal state 
 2020.06.17
 -rebuilded solution for chain of responsibility design pattern
 (account and taskHandler class were extracted to project chainOfResponsibility.Library, unit test project was created - chainOfResponsibility.UnitTests)
+
+2020.06.24
+-command design pattern update
+(software to handle and navigate through created folders/files - first project created in full TDD metodology)
