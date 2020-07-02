@@ -68,3 +68,8 @@ Comparing to strategy - purpose of this design pattern is change internal state 
 2020.06.24
 -command design pattern update
 (software to handle and navigate through created folders/files - first project created in full TDD metodology)
+
+2020.07.02
+-memento design pattern update 0.1 (TDD)
+(TODO:  -finish memento class which is responsible for creating snapshot of actual settings value,
+	-prepare UI to manage settings (changing values, saving and loading settings order);
