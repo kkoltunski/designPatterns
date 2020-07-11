@@ -73,3 +73,8 @@ Comparing to strategy - purpose of this design pattern is change internal state 
 -memento design pattern update 0.1 (TDD)
 (TODO:  -finish memento class which is responsible for creating snapshot of actual settings value,
 	-prepare UI to manage settings (changing values, saving and loading settings order);
+
+2020.07.11
+-finished memento class which is responsible for creating snapshot of actual settings value;
+(TODO:  -test refactoring for settingsMemento class;
+	-prepare UI to manage settings (changing values, saving and loading settings order);
