@@ -9,15 +9,19 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace mementoUnitTests
 {
 	std::shared_ptr<settings> pToSettings{ nullptr };
+	settingsStruct* pToAuxiliaryStruct{ nullptr };
 	std::string auxiliaryString{""};
 
 	TEST_CLASS(settingsUnitTests){
 	private:
-		settingsStruct snapshot;
-
 		TEST_CLASS_INITIALIZE(TestClassTearUp) {
 			pToSettings = settings::getInstance();
+			pToAuxiliaryStruct = new settingsStruct;
 			auxiliaryString = "testProfile";
+		}
+
+		TEST_CLASS_CLEANUP(testClassTearsDown) {
+			delete pToAuxiliaryStruct;
 		}
 
 	public:
@@ -26,22 +30,20 @@ namespace mementoUnitTests
 		}
 
 		TEST_METHOD(makeSnapshot_ifCalledWhenInstanceIsAlreadyCreated_snapshotProfilNameIsEqualToGivenName) {
-			snapshot = pToSettings->makeSnapshot(auxiliaryString);
-			Assert::AreEqual(auxiliaryString, snapshot.profileName);
+			*pToAuxiliaryStruct = pToSettings->makeSnapshot(auxiliaryString);
+			Assert::AreEqual(auxiliaryString, pToAuxiliaryStruct->profileName);
 		}
 
 		TEST_METHOD(setSnapshot_afterCall_newSettingsAreLoaded) {
-			settingsMemento memento{ pToSettings.get() };
-
 			pToSettings->makeSnapshot(auxiliaryString + std::to_string(1));
 			pToSettings->makeSnapshot(auxiliaryString + std::to_string(2));
 			pToSettings->makeSnapshot(auxiliaryString + std::to_string(3));
 			pToSettings->makeSnapshot(auxiliaryString + std::to_string(4));
 			
 			pToSettings->tryToSetSnapshot(auxiliaryString + std::to_string(3));
-			snapshot = pToSettings->makeSnapshot();
+			*pToAuxiliaryStruct = pToSettings->makeSnapshot();
 
-			Assert::AreEqual((auxiliaryString + std::to_string(3)), snapshot.profileName);
+			Assert::AreEqual((auxiliaryString + std::to_string(3)), pToAuxiliaryStruct->profileName);
 		}
 	};
 
@@ -49,9 +51,15 @@ namespace mementoUnitTests
 	private:
 		std::size_t mementoSizeBefore{}, mementoSizeAfter{};
 
+
 		TEST_CLASS_INITIALIZE(testClassTearsUp) {
 			pToSettings = settings::getInstance();
-			auxiliaryString = "testProfile";
+			pToAuxiliaryStruct = new settingsStruct;
+			pToAuxiliaryStruct->profileName = "testProfile";
+		}
+
+		TEST_CLASS_CLEANUP(testClassTearsDown) {
+			delete pToAuxiliaryStruct;
 		}
 
 		TEST_METHOD_CLEANUP(TestMethodTearsDown) {
@@ -60,22 +68,22 @@ namespace mementoUnitTests
 		}
 
 	public:
-		TEST_METHOD(append_afterCallForUniqueMementoName_differenceBetweenMementoContainerSizesIsExactlyOne){
+		TEST_METHOD(append_afterCallForUniqueMementoName_settingsProfileIsAddedToContainer){
 			settingsMemento memento{ pToSettings.get() };
-			
+
 			mementoSizeBefore = memento.size();
-			memento.append(pToSettings->makeSnapshot(auxiliaryString));
+			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
 			mementoSizeAfter = memento.size();
 
 			Assert::AreEqual(static_cast<std::size_t>(1), (mementoSizeAfter - mementoSizeBefore));
 		}
 
-		TEST_METHOD(append_afterCallForNotUniqueName_differenceBetweenMementoContainerSizesIsTheSame) {
+		TEST_METHOD(append_afterCallForNotUniqueName_settingsProfileIsNotAddedToContainer) {
 			settingsMemento memento{ pToSettings.get() };
 
-			memento.append(pToSettings->makeSnapshot(auxiliaryString));
+			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
 			mementoSizeBefore = memento.size();
-			memento.append(pToSettings->makeSnapshot(auxiliaryString));
+			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
 			mementoSizeAfter = memento.size();
 
 			Assert::AreEqual(static_cast<std::size_t>(0), (mementoSizeAfter - mementoSizeBefore));
@@ -85,13 +93,16 @@ namespace mementoUnitTests
 			settingsMemento memento{ pToSettings.get() };
 			settingsStruct snapshot{};
 
-			memento.append(pToSettings->makeSnapshot(auxiliaryString + std::to_string(1)));
-			memento.append(pToSettings->makeSnapshot(auxiliaryString + std::to_string(2)));
-			memento.append(pToSettings->makeSnapshot(auxiliaryString + std::to_string(3)));
+			pToAuxiliaryStruct->profileName += std::to_string(1);
+			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
+			pToAuxiliaryStruct->profileName += std::to_string(2);
+			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
+			pToAuxiliaryStruct->profileName += std::to_string(3);
+			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
 
-			snapshot = memento.getProfile(pToSettings.get(), auxiliaryString + std::to_string(2));
+			snapshot = memento.getProfile(pToSettings.get(), pToAuxiliaryStruct->profileName);
 
-			Assert::AreEqual(auxiliaryString + std::to_string(2), snapshot.profileName);
+			Assert::AreEqual(pToAuxiliaryStruct->profileName, snapshot.profileName);
 		}
 
 		TEST_METHOD(getProfile_whenCalledForNameWhichNotExistInContainer_throwsException) {
