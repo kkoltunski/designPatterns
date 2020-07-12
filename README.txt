@@ -78,3 +78,7 @@ Comparing to strategy - purpose of this design pattern is change internal state 
 -finished memento class which is responsible for creating snapshot of actual settings value;
 (TODO:  -test refactoring for settingsMemento class;
 	-prepare UI to manage settings (changing values, saving and loading settings order);
+
+2020.07.12
+-upload refactored memento unit tests
+(TODO:  -prepare UI to manage settings (changing values, saving and loading settings order);
