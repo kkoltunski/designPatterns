@@ -34,6 +34,21 @@ settingsStruct settingsMemento::getProfile(settings* _questionSource, const std:
 	return *(iterator);
 }
 
+//This method shouldnt share whole settings struct it should only show partial informations
+std::string settingsMemento::getProfile(std::size_t _index) {
+	std::size_t counter{0};
+
+	if (!settingsList.size() || (_index > settingsList.size() || _index < 0)) {
+		throw(std::exception("Invalid index."));
+	}
+	
+	auto iterator = std::find_if(std::begin(settingsList), std::end(settingsList),
+		[&](settingsStruct settings)
+		{bool result{ false }; if (counter++ == _index) { result = true; } return result; });
+
+	return (*(iterator)).profileName;
+}
+
 std::size_t settingsMemento::size() {
 	return settingsList.size();
 }

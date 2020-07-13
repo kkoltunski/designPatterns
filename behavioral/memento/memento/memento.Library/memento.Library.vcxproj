@@ -141,10 +141,12 @@
   <ItemGroup>
     <ClCompile Include="settingsMemento.cpp" />
     <ClCompile Include="settings.cpp" />
+    <ClCompile Include="userInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="settingsMemento.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="userInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

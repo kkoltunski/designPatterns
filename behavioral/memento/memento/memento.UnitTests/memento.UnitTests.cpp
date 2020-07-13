@@ -3,6 +3,7 @@
 #include <functional>
 #include "..\memento.Library\settings.h"
 #include "..\memento.Library\settingsMemento.h"
+#include "..\memento.Library\userInterface.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -10,14 +11,13 @@ namespace mementoUnitTests
 {
 	std::shared_ptr<settings> pToSettings{ nullptr };
 	settingsStruct* pToAuxiliaryStruct{ nullptr };
-	std::string auxiliaryString{""};
+	std::string auxiliaryString{"testProfile"};
 
 	TEST_CLASS(settingsUnitTests){
 	private:
 		TEST_CLASS_INITIALIZE(TestClassTearUp) {
 			pToSettings = settings::getInstance();
 			pToAuxiliaryStruct = new settingsStruct;
-			auxiliaryString = "testProfile";
 		}
 
 		TEST_CLASS_CLEANUP(testClassTearsDown) {
@@ -50,12 +50,15 @@ namespace mementoUnitTests
 	TEST_CLASS(settingsMementoUnitTests) {
 	private:
 		std::size_t mementoSizeBefore{}, mementoSizeAfter{};
-
+		settingsStruct snapshot{};
 
 		TEST_CLASS_INITIALIZE(testClassTearsUp) {
 			pToSettings = settings::getInstance();
 			pToAuxiliaryStruct = new settingsStruct;
-			pToAuxiliaryStruct->profileName = "testProfile";
+		}
+
+		TEST_METHOD_INITIALIZE(testMethodTearsUp) {
+			pToAuxiliaryStruct->profileName = auxiliaryString;
 		}
 
 		TEST_CLASS_CLEANUP(testClassTearsDown) {
@@ -91,7 +94,6 @@ namespace mementoUnitTests
 
 		TEST_METHOD(getProfile_whenCalledForNameWhichExistInContainer_returnsSettings) {
 			settingsMemento memento{ pToSettings.get() };
-			settingsStruct snapshot{};
 
 			pToAuxiliaryStruct->profileName += std::to_string(1);
 			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
@@ -109,6 +111,53 @@ namespace mementoUnitTests
 			settingsMemento memento{ pToSettings.get() };
 			std::function<void(void)> functionWhichRaisesException = [&]() {memento.getProfile(pToSettings.get(), "NameWhichNotExist"); };
 			Assert::ExpectException<std::exception>(functionWhichRaisesException);
+		}
+
+		TEST_METHOD(getProfile_whenCalledWithValidIndex_returnsNameOfProfile) {
+			settingsMemento memento{ pToSettings.get() };
+
+			pToAuxiliaryStruct->profileName += std::to_string(1);
+			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
+			pToAuxiliaryStruct->profileName += std::to_string(2);
+			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
+			pToAuxiliaryStruct->profileName += std::to_string(3);
+			memento.append(pToSettings.get(), *pToAuxiliaryStruct);
+
+			snapshot.profileName = memento.getProfile(1);
+
+			Assert::AreEqual((auxiliaryString + std::to_string(12)), snapshot.profileName);
+		}
+
+		TEST_METHOD(getProfile_whenCalledWithInvalidIndex_throwsException) {
+			settingsMemento memento{ pToSettings.get() };
+			std::function<void(void)> shouldThrowException = [&]() {memento.getProfile(111); };
+			Assert::ExpectException<std::exception>(shouldThrowException);
+		}
+	};
+
+	TEST_CLASS(userInterfaceUnitTests) {
+	private:
+		userInterface UI{ pToSettings.get() };
+
+		TEST_METHOD_INITIALIZE(testClassTearsUp) {
+			pToSettings = settings::getInstance();
+		}
+
+	public:
+		TEST_METHOD(showOptions_whenCalled_coutRdbufContentProfileName) {
+			std::string expectedResult = ">testProfile1\n testProfile2\n testProfile3";
+			std::ostringstream localStream{};
+
+			auto coutRdbud = std::cout.rdbuf();
+			std::cout.rdbuf(localStream.rdbuf());
+
+			pToSettings->makeSnapshot(auxiliaryString + std::to_string(1));
+			pToSettings->makeSnapshot(auxiliaryString + std::to_string(2));
+			pToSettings->makeSnapshot(auxiliaryString + std::to_string(3));
+			UI.showOptions();
+
+			std::cout.rdbuf(coutRdbud);
+			Assert::AreEqual(expectedResult, localStream.str());
 		}
 	};
 }

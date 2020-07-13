@@ -6,8 +6,7 @@
 
 class settings{
 private:
-	settingsStruct parameter;
-
+	settingsStruct parameters;
 	settingsMemento* memento;
 
 protected:
@@ -20,6 +19,10 @@ public:
 	static std::shared_ptr<settings> getInstance();
 	settingsStruct makeSnapshot(const std::string& _savedProfileName = "");
 	bool tryToSetSnapshot(const std::string& _profileName);
+
+	inline settingsMemento* shareMemento() {
+		return memento;
+	}
 };
 
 #endif // SETTINGS_H

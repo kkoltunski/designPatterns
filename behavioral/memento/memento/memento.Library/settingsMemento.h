@@ -8,9 +8,9 @@
 
 class settings;
 
+//This class is not necessary - just for project purposes
 struct settingsStruct {
 	std::string profileName{};
-
 };
 
 class settingsMemento{
@@ -24,6 +24,7 @@ public:
 	settingsMemento(settings* _source);
 	void append(settings* _questionSource, const settingsStruct& _set);
 	settingsStruct getProfile(settings* _questionSource, const std::string& _profileName);
+	std::string getProfile(std::size_t _index);
 	std::size_t size();
 };
 
