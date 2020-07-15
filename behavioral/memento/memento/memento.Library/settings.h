@@ -15,7 +15,7 @@ protected:
 	settings();
 
 public:
-	virtual ~settings() = default;
+	virtual ~settings();
 	static std::shared_ptr<settings> getInstance();
 	settingsStruct makeSnapshot(const std::string& _savedProfileName = "");
 	bool tryToSetSnapshot(const std::string& _profileName);

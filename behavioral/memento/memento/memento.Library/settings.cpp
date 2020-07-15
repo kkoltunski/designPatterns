@@ -6,6 +6,10 @@ settings::settings(){
 	parameters.profileName = "default";
 }
 
+settings::~settings() {
+	delete instance.get();
+}
+
 std::shared_ptr<settings> settings::getInstance(){
 	if(instance == nullptr){
 		instance = std::make_shared<settings>(*(new settings()));
