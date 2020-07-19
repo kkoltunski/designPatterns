@@ -3,36 +3,42 @@
 
 #define KEY_UP    72
 #define KEY_DOWN  80
-#define KEY_ENTER 10
+#define KEY_ENTER '\r'
 
 #include <conio.h>
 #include <vector>
+#include <limits>
 #include "settingsMemento.h"
 #include "settings.h"
+#include "limit.h"
 
 class userInterface{
 private:
-	enum magicNumbers { offsetToFirstElement = 2 };
+	enum control : char { optionControl = 0, profileControl = 1	};
 
+	void showProfileNamesContentInConsole();
 	void selectorValueControl();
 	void updateProfileList();
+	std::string getUserType();
+	void saveOrder();
+	void loadOrder();
 
 	settings* pToSettings;
 	settingsMemento* pToMemento;
 	std::list<std::string> profileNames;
 	std::vector<std::string> optionsVector;
 
-	int selector;
-	int choosenProfileNameIndex;
-	bool update;
+	int optionSelector;
+	int profileNameIndex;
+	control actualControl;
+	char pressedKey{};
+
 public:
 	userInterface(settings* _pToSettings);
 
-	void showProfileNamesContentInConsole();
 	void showOptionsVectorInConsole();
-	void saveOrder();
-	void loadOrder();
-	void getKey();
+	void actionPerformance();
+	void keyFilter();
 };
 
 #endif // USERINTERFACE_H

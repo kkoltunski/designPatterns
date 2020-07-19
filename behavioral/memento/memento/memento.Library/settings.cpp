@@ -7,7 +7,6 @@ settings::settings(){
 }
 
 settings::~settings() {
-	delete instance.get();
 }
 
 std::shared_ptr<settings> settings::getInstance(){

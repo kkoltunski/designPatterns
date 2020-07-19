@@ -38,10 +38,14 @@ settingsStruct settingsMemento::getProfile(settings* _questionSource, const std:
 std::string settingsMemento::getProfile(std::size_t _index) {
 	std::size_t counter{0};
 
-	if (!settingsList.size() || (_index > settingsList.size() || _index < 0)) {
+	if (/*!settingsList.size() ||*/ (_index > settingsList.size() || _index < 0)) {
 		throw(std::exception("Invalid index."));
 	}
 	
+	if (settingsList.empty()) {
+		throw(std::exception("Memento list is empty."));
+	}
+
 	auto iterator = std::find_if(std::begin(settingsList), std::end(settingsList),
 		[&](settingsStruct settings)
 		{bool result{ false }; if (counter++ == _index) { result = true; } return result; });

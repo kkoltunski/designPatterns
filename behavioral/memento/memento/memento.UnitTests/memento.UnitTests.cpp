@@ -4,6 +4,7 @@
 #include "..\memento.Library\settings.h"
 #include "..\memento.Library\settingsMemento.h"
 #include "..\memento.Library\userInterface.h"
+#include "..\memento.Library\limit.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -165,4 +166,42 @@ namespace mementoUnitTests
 			Assert::AreEqual(expectedResult, localStream.str().substr(begining, std::string::npos));
 		}
 	};*/
+
+	TEST_CLASS(limitUnitTests) {
+	private:
+		limit<signed int> testLimit{ 0, 10 };
+		bool result{false};
+
+		TEST_METHOD_INITIALIZE(tearsUp) {
+			result = false;
+		}
+
+	public:
+		TEST_METHOD(compareTo_afterCallForValueInLimitRange_returnTrue) {
+			result = testLimit.checkIfFit(8);
+			Assert::IsTrue(result);
+		}
+
+		TEST_METHOD(compareTo_afterCallForValueOutOfLimitRange_returnFalse) {
+			result = testLimit.checkIfFit(17);
+			Assert::IsFalse(result);
+		}
+
+		TEST_METHOD(adjustIfDoesntMatch_afterCallForVariableWhichIsInRange_returnFalseAndVariableValueIsTheSame) {
+			signed int testVariable{ 5 };
+			result = testLimit.adjustIfDoesnttMatch(testVariable);
+
+			Assert::IsFalse(result);
+		}
+
+		TEST_METHOD(adjustIfDoesntMatch_afterCallForVariableWhichIsInRange_returnTrueAndVariableValueIsChanged) {
+			signed int testVariable{ 15 };
+			auto variableMemory = testVariable;
+
+			result = testLimit.adjustIfDoesnttMatch(testVariable);
+
+			Assert::IsTrue(result);
+			Assert::AreNotEqual(variableMemory, testVariable);
+		}
+	};
 }

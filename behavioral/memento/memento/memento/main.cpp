@@ -4,9 +4,11 @@ int main(){
 	userInterface UI{ settings::getInstance().get() };
 
 	do {
-		UI.showProfileNamesContentInConsole();
+		system("CLS");
+
+		UI.actionPerformance();
 		UI.showOptionsVectorInConsole();
-		UI.getKey();
+		UI.keyFilter();
 
 	} while (true);
 

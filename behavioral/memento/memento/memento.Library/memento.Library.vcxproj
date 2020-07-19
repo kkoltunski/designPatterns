@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="limit.cpp" />
     <ClCompile Include="settingsMemento.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="userInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="limit.h" />
     <ClInclude Include="settingsMemento.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="userInterface.h" />
