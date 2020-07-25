@@ -82,3 +82,11 @@ Comparing to strategy - purpose of this design pattern is change internal state 
 2020.07.12
 -upload refactored memento unit tests
 (TODO:  -prepare UI to manage settings (changing values, saving and loading settings order);
+
+2020.07.19
+-memento design pattern update
+(managing settings profile of some singleton settings class)
+
+2020.07.25
+-observer design pattern update
+(detecting mouse cursor in specified field of screen - no TDD because strong abstract dependencies)
