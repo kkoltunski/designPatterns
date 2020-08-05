@@ -90,3 +90,7 @@ Comparing to strategy - purpose of this design pattern is change internal state 
 2020.07.25
 -observer design pattern update
 (detecting mouse cursor in specified field of screen - no TDD because strong abstract dependencies)
+
+2020.08.04
+-visitor design pattern update
+(monoticity research on numeric strings)
