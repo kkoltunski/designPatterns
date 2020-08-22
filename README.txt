@@ -94,3 +94,8 @@ Comparing to strategy - purpose of this design pattern is change internal state 
 2020.08.04
 -visitor design pattern update
 (monoticity research on numeric strings)
+
+2020.08.22
+-mediator design pattern update
+(events which could be controlled standalone or by event handler object (mediator) which is in charge of installing / deinstalling actual event.
+Mediator object also estabilish connection beetwen task executors and events)
